@@ -1,0 +1,9 @@
+gmx_MMPBSA -O \
+-i PBSA.in \
+-cs md.tpr \
+-ct md_center.xtc \
+-ci index.ndx \
+-cg 17 18 \
+-cp topol.top \
+-o MMPBSA.dat \
+-do FINAL_DECOMP_MMPBSA.dat
