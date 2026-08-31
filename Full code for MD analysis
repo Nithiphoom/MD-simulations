@@ -1,0 +1,12 @@
+gmx pdb2gmx -f complex.pdb -o complex_processed.gro -p topol.top -i posre.itp -water tip3p -ff amber99sb-ildn
+gmx editconf -f complex_processed.gro -o box.gro -c -d 1.2 -bt dodecahedron
+gmx solvate -cp box.gro -cs spc216.gro -o solv.gro -p topol.top
+gmx grompp -f ions.mdp -c solv.gro -p topol.top -o ions.tpr
+gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutral -conc 0.15
+gmx grompp -f em.mdp -c solv_ions.gro -p topol.top -o em.tpr
+gmx mdrun -v -deffnm em -ntmpi 1 -ntomp 32
+gmx grompp -f nvt.mdp -c em.gro -r em.gro -p topol.top -o nvt.tpr
+gmx mdrun -v -deffnm nvt -ntmpi 1 -ntomp 32
+gmx grompp -f npt.mdp -c nvt.gro -r nvt.gro -p topol.top -o npt.tpr 
+gmx mdrun -v -deffnm npt
+gmx grompp -f md.mdp -c npt.gro -t npt.cpt -p topol.top -o md.tpr
