@@ -1,0 +1,17 @@
+&general
+   startframe=5100,
+   endframe=8000,
+   interval=100,
+   temperature=310.0,
+   verbose=2,
+/
+
+&pb
+   istrng=0.150,
+/
+
+&decomp
+   idecomp=1,
+   dec_verbose=1,
+   print_res="all",
+/
